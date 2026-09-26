@@ -4,6 +4,7 @@ extends CanvasLayer
 ## clean human-world look and the weathered underworld look together
 ## (PRD section 63: the transition fades as a set, not piecemeal).
 
+@onready var root: Control = $Root
 @onready var health_bar: BarMeter = $Root/MetersBox/HealthBar
 @onready var vitality_bar: BarMeter = $Root/MetersBox/VitalityBar
 @onready var gut_meter: GutMeter = $Root/MetersBox/GutMeter
