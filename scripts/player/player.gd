@@ -1,0 +1,79 @@
+class_name Player
+extends CharacterBody2D
+## Shared player controller for both the side-scrolling human-world intro
+## and the top-down underworld (PRD section 45). One implementation, one
+## presentation/movement-mode abstraction -- never two unrelated controllers.
+
+enum MovementMode { SIDE_SCROLL, TOP_DOWN }
+
+@export var movement_mode: MovementMode = MovementMode.TOP_DOWN
+@export var move_speed: float = 220.0
+
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var placeholder_visual: Node2D = $PlaceholderVisual
+@onready var _anim_controller := PlayerAnimationController.new(sprite)
+
+## True while the player controller should read Input actions. Scripted
+## cinematics drive the player directly (move_to, etc.) and set this false
+## via GameState.set_control_enabled(false) so nothing fights their control.
+var accepts_input: bool = true
+
+func _ready() -> void:
+	add_to_group("player")
+	GameState.movement_mode = movement_mode
+	accepts_input = GameState.control_enabled
+	EventBus.control_enabled.connect(_on_control_enabled)
+	EventBus.control_disabled.connect(_on_control_disabled)
+	if placeholder_visual:
+		placeholder_visual.visible = sprite.sprite_frames == null
+
+func _on_control_enabled() -> void:
+	accepts_input = true
+
+func _on_control_disabled() -> void:
+	accepts_input = false
+	velocity = Vector2.ZERO
+
+func set_movement_mode(mode: MovementMode) -> void:
+	movement_mode = mode
+	GameState.movement_mode = mode
+	velocity = Vector2.ZERO
+
+func _physics_process(_delta: float) -> void:
+	if not accepts_input:
+		return
+
+	var input_vector := _read_input_vector()
+	velocity = input_vector * move_speed
+	move_and_slide()
+	_anim_controller.update(input_vector, input_vector.length() > 0.01)
+
+func _read_input_vector() -> Vector2:
+	var raw := Vector2(
+		Input.get_action_strength("move_right") - Input.get_action_strength("move_left"),
+		Input.get_action_strength("move_down") - Input.get_action_strength("move_up")
+	)
+	if movement_mode == MovementMode.SIDE_SCROLL:
+		raw.y = 0.0
+	if raw.length() > 1.0:
+		raw = raw.normalized()
+	return raw
+
+## Used by the scripted event system (PRD section 52) to move the player
+## without touching input state, e.g. walking to the breakfast table.
+func move_to(target_position: Vector2, speed: float = move_speed) -> void:
+	var was_accepting := accepts_input
+	accepts_input = false
+	var direction := (target_position - global_position)
+	while direction.length() > 2.0:
+		var step := direction.normalized() * speed * get_physics_process_delta_time()
+		if step.length() > direction.length():
+			step = direction
+		velocity = step / get_physics_process_delta_time()
+		move_and_slide()
+		_anim_controller.update(direction, true)
+		await get_tree().physics_frame
+		direction = target_position - global_position
+	velocity = Vector2.ZERO
+	_anim_controller.update(Vector2.ZERO, false)
+	accepts_input = was_accepting
