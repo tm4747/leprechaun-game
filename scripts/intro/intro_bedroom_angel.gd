@@ -57,7 +57,7 @@ func _on_rug_triggered() -> void:
 
 	await Events.dialogue("", "God... why are things like this?", "THOUGHT", 2.4)
 	await Events.dialogue("", "Why do people treat each other like this?", "THOUGHT", 2.4)
-	await Events.dialogue("", "Why does everyone seem to be upset?", "THOUGHT", 2.6)
+	await Events.dialogue("", "Why does everyone seem to be so upset?", "THOUGHT", 2.6)
 
 	angel.visible = true
 	angel.position.y -= 220.0

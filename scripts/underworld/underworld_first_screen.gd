@@ -15,7 +15,7 @@ const THOUGHTS: Array[Dictionary] = [
 	{"delay": 3.0, "text": "What is this place...?"},
 	{"delay": 14.0, "text": "How did I get here?"},
 	{"delay": 26.0, "text": "It's like our world... but where is the sun?"},
-	{"delay": 40.0, "text": "I don't know what that is up there."},
+	{"delay": 40.0, "text": "I don't know what's up there... it looks like a sky of bone or moon rock."},
 ]
 
 @onready var player: Player = $Player
