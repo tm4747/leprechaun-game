@@ -54,8 +54,8 @@ This shaped every subsequent design decision, so it belongs at the top.
 - **Family:**
   - **Mother** — warm; her sincere lines ("Good morning, sweetheart, I made you some French toast," "There's some dinner on the table for you") always come through as clear, intelligible speech to the boy, regardless of what garbled/hostile speech surrounds them.
   - **Father** — works, comes home stressed; his warm asides ("Hey, kiddo") are also always clear. He and Mother argue increasingly through the Friday sequence; their hostile dialogue is deliberately unintelligible ("Whaa whaa whaa...").
-  - **Billy, the older brother** — mean to the protagonist (mocks him, refuses him a ride, drives off with friends laughing), but the protagonist loves him anyway. This relationship is intended to mirror, thematically, how the boy will eventually deal with the leprechauns: cruelty met without hatred.
-  - **A "little brother"** is mentioned once, only in the described ending (the boy is embraced by "his mother father, little brother and dog" on return home). **This directly conflicts with Billy being called "the big brother" who is mean to him**, and the transcript never reconciles whether there are two brothers (an older, Billy, and a younger one) or whether this was a slip. See **Open Questions**.
+  - **Billy, the older brother** — the boy's only sibling. Mean to the protagonist (mocks him, refuses him a ride, drives off with friends laughing), but the protagonist loves him anyway. This relationship is intended to mirror, thematically, how the boy will eventually deal with the leprechauns: cruelty met without hatred.
+  - A "little brother" mentioned once in the transcript, only in the described ending hug, has been **dropped by decision** — there is no younger brother. The ending reunion is mother, father, Billy, and the dog.
 - **Dog:** A golden retriever, extremely friendly and loving. **Named by the player** (same profanity filter applies). Central to both the opening and the mid/late game — see Section 8.
 
 ---
@@ -299,15 +299,14 @@ One detail from the original transcript is worth calling out because it did **no
 
 These were raised during planning and never answered, or were answered in a way that contradicts something said elsewhere. They should be resolved deliberately before building the content that depends on them, rather than assumed.
 
-1. **Sibling structure.** Is there one older brother (Billy, established as mean) and a separate younger brother (mentioned once, only in the ending hug), or was "little brother" a slip and the family has only one sibling (Billy)? The intro as currently implemented includes only Billy.
-2. **Leprechaun physical appearance.** Traditional Irish-folklore look vs. something darker/more alien? Are good and bad leprechauns visually distinguishable, or does the player have to learn to tell them apart entirely by behavior/intuition?
-3. **Leprechaun size.** Tiny (1–2 ft), child-sized, human-sized, or variable with power level?
-4. **What makes a powerful leprechaun visibly terrifying** (beyond narrative description)? Does it grow larger, distort its surroundings, project multiple copies of itself, speak barely above a whisper while controlling everything around it, or something else?
-5. **Why don't good leprechauns fight the bad ones?** Weakness was given as the surface reason; several deeper possibilities (violence itself feeds the darkness, they've forgotten the old magic, fear, philosophy, waiting for an outsider) were proposed by the assistant during planning but never confirmed by the user.
-6. **Does the sun still exist somewhere**, imprisoned or hidden, or was it destroyed outright? This was explicitly floated as a potentially major endgame hook and left open.
-7. **Save system finalization** (Section 11) — genuinely unresolved; needs a deliberate design pass before any save/consequence system beyond the current intro slice is built.
-8. **Capture-consequence specifics** (Section 7.4) — the tiered 1st/2nd/3rd-capture idea was proposed but never finalized in mechanical detail (what does confinement actually look like moment-to-moment; how does the player escape the first two times?).
-9. **Map-fragment late-game reveal mechanic** (Section 12) — explicitly "a concept to revisit later."
+1. **Leprechaun physical appearance.** Traditional Irish-folklore look vs. something darker/more alien? Are good and bad leprechauns visually distinguishable, or does the player have to learn to tell them apart entirely by behavior/intuition?
+2. **Leprechaun size.** Tiny (1–2 ft), child-sized, human-sized, or variable with power level?
+3. **What makes a powerful leprechaun visibly terrifying** (beyond narrative description)? Does it grow larger, distort its surroundings, project multiple copies of itself, speak barely above a whisper while controlling everything around it, or something else?
+4. **Why don't good leprechauns fight the bad ones?** Weakness was given as the surface reason; several deeper possibilities (violence itself feeds the darkness, they've forgotten the old magic, fear, philosophy, waiting for an outsider) were proposed by the assistant during planning but never confirmed by the user.
+5. **Does the sun still exist somewhere**, imprisoned or hidden, or was it destroyed outright? This was explicitly floated as a potentially major endgame hook and left open.
+6. **Save system finalization** (Section 11) — genuinely unresolved; needs a deliberate design pass before any save/consequence system beyond the current intro slice is built.
+7. **Capture-consequence specifics** (Section 7.4) — the tiered 1st/2nd/3rd-capture idea was proposed but never finalized in mechanical detail (what does confinement actually look like moment-to-moment; how does the player escape the first two times?).
+8. **Map-fragment late-game reveal mechanic** (Section 12) — explicitly "a concept to revisit later."
 
 ---
 
