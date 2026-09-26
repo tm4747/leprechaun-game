@@ -4,9 +4,13 @@
 [ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="2"]
 [ext_resource type="Script" path="res://scripts/intro/auto_event_trigger.gd" id="3"]
 [ext_resource type="PackedScene" path="res://scenes/intro/NPCPlaceholder.tscn" id="4"]
+[ext_resource type="Script" path="res://scripts/intro/exit_trigger.gd" id="5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_trigger"]
 size = Vector2(90, 140)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_exit"]
+size = Vector2(30, 140)
 
 [node name="IntroHome" type="Node2D"]
 script = ExtResource("1")
@@ -14,14 +18,14 @@ script = ExtResource("1")
 [node name="Background" type="ColorRect" parent="."]
 offset_left = 0.0
 offset_top = 0.0
-offset_right = 1200.0
+offset_right = 1350.0
 offset_bottom = 600.0
 color = Color(0.2, 0.16, 0.14, 1)
 
 [node name="Floor" type="ColorRect" parent="."]
 offset_left = 0.0
 offset_top = 520.0
-offset_right = 1200.0
+offset_right = 1350.0
 offset_bottom = 600.0
 color = Color(0.13, 0.1, 0.08, 1)
 
@@ -85,6 +89,20 @@ color = Color(0.5, 0.7, 0.85, 1)
 position = Vector2(900, 400)
 npc_name = "the salesman"
 body_color = Color(0.25, 0.25, 0.3, 1)
+
+[node name="Father" parent="." instance=ExtResource("4")]
+position = Vector2(1050, 500)
+npc_name = "Father"
+body_color = Color(0.3, 0.35, 0.4, 1)
+
+[node name="BedroomExit" type="Area2D" parent="."]
+position = Vector2(1330, 480)
+script = ExtResource("5")
+target_scene = "res://scenes/intro/IntroBedroomAngel.tscn"
+target_spawn_id = "SpawnFromLivingRoom"
+
+[node name="BedroomExitShape" type="CollisionShape2D" parent="BedroomExit"]
+shape = SubResource("RectangleShape2D_exit")
 
 [node name="Player" parent="." instance=ExtResource("2")]
 position = Vector2(200, 500)

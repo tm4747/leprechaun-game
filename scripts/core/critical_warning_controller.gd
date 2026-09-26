@@ -28,29 +28,34 @@ func _ready() -> void:
 
 func _on_health_changed(_current: float, _max_health: float) -> void:
 	var critical := GameState.health.is_critical()
-	if critical and not _health_was_critical:
-		EventBus.health_critical.emit()
-	elif not critical and _health_was_critical:
-		EventBus.health_restored.emit()
+	var was_critical := _health_was_critical
+	# Update the flag *before* emitting: any_critical() must already read
+	# true by the time a listener reacts to the signal it triggers.
 	_health_was_critical = critical
+	if critical and not was_critical:
+		EventBus.health_critical.emit()
+	elif not critical and was_critical:
+		EventBus.health_restored.emit()
 	_refresh_beep()
 
 func _on_vitality_changed(_current: float, _max_vitality: float) -> void:
 	var critical := GameState.vitality.is_critical()
-	if critical and not _vitality_was_critical:
-		EventBus.vitality_critical.emit()
-	elif not critical and _vitality_was_critical:
-		EventBus.vitality_restored.emit()
+	var was_critical := _vitality_was_critical
 	_vitality_was_critical = critical
+	if critical and not was_critical:
+		EventBus.vitality_critical.emit()
+	elif not critical and was_critical:
+		EventBus.vitality_restored.emit()
 	_refresh_beep()
 
 func _on_gut_changed(_value: float, state: int) -> void:
 	var critical := state == GutComponent.State.TERROR
-	if critical and not _gut_was_critical:
-		EventBus.gut_critical.emit(state)
-	elif not critical and _gut_was_critical:
-		EventBus.gut_restored.emit()
+	var was_critical := _gut_was_critical
 	_gut_was_critical = critical
+	if critical and not was_critical:
+		EventBus.gut_critical.emit(state)
+	elif not critical and was_critical:
+		EventBus.gut_restored.emit()
 	_refresh_beep()
 
 func any_critical() -> bool:

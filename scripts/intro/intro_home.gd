@@ -10,6 +10,7 @@ const COMMERCIAL_COLOR := Color(0.85, 0.75, 0.55)
 
 @onready var player: Player = $Player
 @onready var mother: NPCPlaceholder = $Mother
+@onready var father: NPCPlaceholder = $Father
 @onready var salesman: NPCPlaceholder = $Salesman
 
 @onready var dinner_trigger: AutoEventTrigger = $DinnerTrigger
@@ -17,6 +18,7 @@ const COMMERCIAL_COLOR := Color(0.85, 0.75, 0.55)
 @onready var remote_trigger: AutoEventTrigger = $RemoteTrigger
 @onready var couch_marker: Marker2D = $CouchMarker
 @onready var tv_screen: ColorRect = $TV/Screen
+@onready var bedroom_exit: ExitTrigger = $BedroomExit
 
 var channel_index := 0
 
@@ -25,10 +27,11 @@ func _ready() -> void:
 	GameState.intro_progress = "evening_return_home"
 	GameState.mark_screen_visited("intro_home")
 	player.set_movement_mode(Player.MovementMode.SIDE_SCROLL)
-	player.set_camera_limits(0, 0, 1200, 600)
+	player.set_camera_limits(0, 0, 1350, 600)
 
 	tv_screen.visible = false
 	salesman.visible = false
+	father.visible = false
 
 	dinner_trigger.triggered.connect(_on_dinner_triggered)
 	remote_trigger.triggered.connect(_on_remote_triggered)
@@ -95,3 +98,20 @@ func _shutdown_tv() -> void:
 	tv_screen.visible = false
 	GameState.intro_progress = "evening_tv_off"
 	Events.enable_control()
+	await _father_arrives_and_argument()
+
+## Section 23: the boy is free to move throughout -- nothing requires him
+## to resolve the argument, and the dialogue plays out ambiently rather
+## than as a control-locking cutscene (PRD Rule 7: preserve player agency).
+func _father_arrives_and_argument() -> void:
+	father.visible = true
+	await Events.dialogue(father.npc_name, "Hey, kiddo.", "CLEAR", 1.8)
+	await Events.wait(0.6)
+	await Events.dialogue(mother.npc_name, "Whaa whaa whaa...", "GARBLED", 1.6)
+	await Events.dialogue(father.npc_name, "Whaa whaa whaa whaa!", "GARBLED", 1.6)
+	await Events.dialogue(mother.npc_name, "Whaa whaa!", "GARBLED", 1.4)
+
+	GameState.health.damage(35.0)
+	GameState.vitality.consume(15.0)
+	GameState.gut.modify_gut(-0.15)
+	GameState.intro_progress = "evening_parents_argument"
