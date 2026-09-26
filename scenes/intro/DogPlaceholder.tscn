@@ -1,20 +1,14 @@
 [gd_scene load_steps=2 format=3]
 
 [ext_resource type="Script" path="res://scripts/intro/dog_placeholder.gd" id="1"]
+[ext_resource type="SpriteFrames" path="res://art/intro/characters/dog/DogSpriteFrames.tres" id="2"]
 
 [node name="DogPlaceholder" type="Node2D"]
 script = ExtResource("1")
 
-[node name="Body" type="ColorRect" parent="."]
-offset_left = -14.0
-offset_top = -8.0
-offset_right = 10.0
-offset_bottom = 6.0
-color = Color(0.78, 0.62, 0.28, 1)
-
-[node name="Head" type="ColorRect" parent="."]
-offset_left = 6.0
-offset_top = -12.0
-offset_right = 18.0
-offset_bottom = -2.0
-color = Color(0.82, 0.66, 0.32, 1)
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -8)
+texture_filter = 1
+sprite_frames = ExtResource("2")
+animation = &"idle"
+scale = Vector2(2.2, 2.2)

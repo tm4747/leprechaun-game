@@ -7,7 +7,7 @@ const SCHOOL_SCENE := "res://scenes/intro/IntroSchool.tscn"
 
 @onready var player: Player = $Player
 @onready var bus_stop_trigger: AutoEventTrigger = $BusStopTrigger
-@onready var bus: ColorRect = $Bus
+@onready var bus: Node2D = $Bus
 @onready var bus_arrival_marker: Marker2D = $BusArrivalMarker
 @onready var bus_stand_marker: Marker2D = $BusStandMarker
 

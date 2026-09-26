@@ -25,8 +25,7 @@ func _ready() -> void:
 	accepts_input = GameState.control_enabled
 	EventBus.control_enabled.connect(_on_control_enabled)
 	EventBus.control_disabled.connect(_on_control_disabled)
-	if placeholder_visual:
-		placeholder_visual.visible = sprite.sprite_frames == null
+	_update_visual_mode()
 
 func _on_control_enabled() -> void:
 	accepts_input = true
@@ -48,6 +47,22 @@ func set_movement_mode(mode: MovementMode) -> void:
 	movement_mode = mode
 	GameState.movement_mode = mode
 	velocity = Vector2.ZERO
+	_update_visual_mode()
+
+## Real art only exists for one movement mode at a time so far (side-scroll
+## has it, top-down doesn't yet) -- fall back to the placeholder silhouette
+## for whichever mode has no matching directional animations, rather than
+## hiding it outright the moment any sprite_frames resource is attached.
+func _update_visual_mode() -> void:
+	var has_art := false
+	if sprite.sprite_frames:
+		if movement_mode == MovementMode.SIDE_SCROLL:
+			has_art = sprite.sprite_frames.has_animation("walk_left") or sprite.sprite_frames.has_animation("walk_right")
+		else:
+			has_art = sprite.sprite_frames.has_animation("walk_down") or sprite.sprite_frames.has_animation("walk_up")
+	sprite.visible = has_art
+	if placeholder_visual:
+		placeholder_visual.visible = not has_art
 
 func _physics_process(_delta: float) -> void:
 	if not accepts_input:

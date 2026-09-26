@@ -45,16 +45,21 @@ func _on_fetch_triggered() -> void:
 	await Events.wait(0.4)
 	await dog.move_to(fetch_marker_1.global_position, 0.5)
 	await Events.wait(0.3)
+	dog.play_pose("carry")
 	await dog.move_to(dog_home_marker.global_position, 0.6)
+	dog.play_pose("sit")
 	var hop := create_tween()
 	hop.tween_property(dog, "position:y", dog.position.y - 8.0, 0.12)
 	hop.tween_property(dog, "position:y", dog.position.y, 0.12)
 	await hop.finished
+	dog.play_pose("")
 
 	await Events.wait(0.5)
 	await dog.move_to(fetch_marker_2.global_position, 0.7)
 	await Events.wait(0.3)
+	dog.play_pose("carry")
 	await dog.move_to(player.global_position + Vector2(-20, 0), 0.8)
+	dog.play_pose("")
 
 	await Events.wait(0.6)
 	await _play_well_sequence()
@@ -79,12 +84,14 @@ func _play_well_sequence() -> void:
 
 	await Events.dialogue(GameState.player_name, "NO!", "CLEAR", 0.8)
 
+	dog.play_pose("jump")
 	var jump := create_tween()
 	jump.tween_property(dog, "global_position", well_marker.global_position + Vector2(30, -20), 0.35) \
 		.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	jump.tween_property(dog, "global_position", well_marker.global_position + Vector2(30, 0), 0.15) \
 		.set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
 	await jump.finished
+	dog.play_pose("")
 	await Events.wait(0.3)
 	await dog.move_to(well_marker.global_position + Vector2(60, 0), 0.5)
 

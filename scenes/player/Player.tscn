@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1"]
+[ext_resource type="SpriteFrames" path="res://art/intro/characters/player/PlayerSpriteFrames.tres" id="2"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1"]
 radius = 8.0
@@ -15,6 +16,11 @@ script = ExtResource("1")
 shape = SubResource("CapsuleShape2D_1")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -12)
+texture_filter = 1
+sprite_frames = ExtResource("2")
+animation = &"idle_left"
+scale = Vector2(0.4, 0.4)
 
 [node name="PlaceholderVisual" type="Node2D" parent="."]
 

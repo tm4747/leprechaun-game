@@ -5,6 +5,8 @@
 [ext_resource type="Script" path="res://scripts/intro/auto_event_trigger.gd" id="3"]
 [ext_resource type="PackedScene" path="res://scenes/intro/NPCPlaceholder.tscn" id="4"]
 [ext_resource type="PackedScene" path="res://scenes/intro/DogPlaceholder.tscn" id="5"]
+[ext_resource type="Texture2D" path="res://art/intro/environments/props/well.png" id="6"]
+[ext_resource type="Texture2D" path="res://art/intro/environments/props/table.png" id="7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_stick"]
 size = Vector2(60, 100)
@@ -43,24 +45,22 @@ offset_right = 260.0
 offset_bottom = 600.0
 color = Color(0.14, 0.11, 0.08, 1)
 
-[node name="BreakfastCounter" type="ColorRect" parent="."]
-offset_left = 140.0
-offset_top = 450.0
-offset_right = 220.0
-offset_bottom = 520.0
-color = Color(0.4, 0.27, 0.17, 1)
+[node name="BreakfastCounter" type="Sprite2D" parent="."]
+position = Vector2(180, 485)
+scale = Vector2(4.0, 4.0)
+texture_filter = 1
+texture = ExtResource("7")
 
 [node name="Mother" parent="." instance=ExtResource("4")]
 position = Vector2(180, 500)
 npc_name = "Mother"
 body_color = Color(0.55, 0.35, 0.45, 1)
 
-[node name="Well" type="ColorRect" parent="."]
-offset_left = 1380.0
-offset_top = 440.0
-offset_right = 1460.0
-offset_bottom = 490.0
-color = Color(0.3, 0.28, 0.25, 1)
+[node name="Well" type="Sprite2D" parent="."]
+position = Vector2(1420, 465)
+scale = Vector2(3.2, 3.2)
+texture_filter = 1
+texture = ExtResource("6")
 
 [node name="WellMarker" type="Marker2D" parent="."]
 position = Vector2(1420, 470)

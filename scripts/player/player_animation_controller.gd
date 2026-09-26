@@ -83,6 +83,23 @@ func _play(anim_name: String) -> void:
 		return
 	current_animation = anim_name
 	if _has_animation(anim_name):
+		sprite.flip_h = false
 		sprite.play(anim_name)
+		return
+	# Mirror fallback: many side-view sprite packs (ours included) only
+	# draw one horizontal facing and expect the engine to flip it for the
+	# other. If the exact direction is missing but its mirror image exists,
+	# play that flipped instead of showing nothing.
+	var mirrored := _mirror_name(anim_name)
+	if mirrored != anim_name and _has_animation(mirrored):
+		sprite.flip_h = true
+		sprite.play(mirrored)
 	# else: no art authored for this animation yet (placeholder-art phase).
 	# We still track it as "current" so callers/tests can assert intent.
+
+func _mirror_name(anim_name: String) -> String:
+	if anim_name.ends_with("_left"):
+		return anim_name.substr(0, anim_name.length() - 5) + "_right"
+	elif anim_name.ends_with("_right"):
+		return anim_name.substr(0, anim_name.length() - 6) + "_left"
+	return anim_name
