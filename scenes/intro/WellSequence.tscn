@@ -1,0 +1,102 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://scripts/intro/well_sequence.gd" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="2"]
+[ext_resource type="Script" path="res://scripts/intro/auto_event_trigger.gd" id="3"]
+[ext_resource type="PackedScene" path="res://scenes/intro/NPCPlaceholder.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://scenes/intro/DogPlaceholder.tscn" id="5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_stick"]
+size = Vector2(60, 100)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fetch"]
+size = Vector2(80, 140)
+
+[node name="WellSequence" type="Node2D"]
+script = ExtResource("1")
+
+[node name="KitchenBackground" type="ColorRect" parent="."]
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 260.0
+offset_bottom = 600.0
+color = Color(0.22, 0.19, 0.15, 1)
+
+[node name="Sky" type="ColorRect" parent="."]
+offset_left = 260.0
+offset_top = 0.0
+offset_right = 1500.0
+offset_bottom = 400.0
+color = Color(0.55, 0.7, 0.8, 1)
+
+[node name="Ground" type="ColorRect" parent="."]
+offset_left = 260.0
+offset_top = 400.0
+offset_right = 1500.0
+offset_bottom = 600.0
+color = Color(0.32, 0.48, 0.24, 1)
+
+[node name="Floor" type="ColorRect" parent="."]
+offset_left = 0.0
+offset_top = 520.0
+offset_right = 260.0
+offset_bottom = 600.0
+color = Color(0.14, 0.11, 0.08, 1)
+
+[node name="BreakfastCounter" type="ColorRect" parent="."]
+offset_left = 140.0
+offset_top = 450.0
+offset_right = 220.0
+offset_bottom = 520.0
+color = Color(0.4, 0.27, 0.17, 1)
+
+[node name="Mother" parent="." instance=ExtResource("4")]
+position = Vector2(180, 500)
+npc_name = "Mother"
+body_color = Color(0.55, 0.35, 0.45, 1)
+
+[node name="Well" type="ColorRect" parent="."]
+offset_left = 1380.0
+offset_top = 440.0
+offset_right = 1460.0
+offset_bottom = 490.0
+color = Color(0.3, 0.28, 0.25, 1)
+
+[node name="WellMarker" type="Marker2D" parent="."]
+position = Vector2(1420, 470)
+
+[node name="Stick" type="ColorRect" parent="."]
+offset_left = 545.0
+offset_top = 488.0
+offset_right = 565.0
+offset_bottom = 494.0
+color = Color(0.4, 0.28, 0.15, 1)
+
+[node name="StickTrigger" type="Area2D" parent="."]
+position = Vector2(555, 480)
+script = ExtResource("3")
+
+[node name="StickTriggerShape" type="CollisionShape2D" parent="StickTrigger"]
+shape = SubResource("RectangleShape2D_stick")
+
+[node name="FetchTrigger" type="Area2D" parent="."]
+position = Vector2(780, 480)
+script = ExtResource("3")
+
+[node name="FetchTriggerShape" type="CollisionShape2D" parent="FetchTrigger"]
+shape = SubResource("RectangleShape2D_fetch")
+
+[node name="DogHomeMarker" type="Marker2D" parent="."]
+position = Vector2(760, 470)
+
+[node name="FetchMarker1" type="Marker2D" parent="."]
+position = Vector2(900, 470)
+
+[node name="FetchMarker2" type="Marker2D" parent="."]
+position = Vector2(1080, 470)
+
+[node name="Player" parent="." instance=ExtResource("2")]
+position = Vector2(80, 500)
+
+[node name="Dog" parent="." instance=ExtResource("5")]
+position = Vector2(110, 470)

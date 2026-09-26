@@ -5,7 +5,7 @@ extends Node2D
 ## Walking onto the rug in front of the window ends control and begins
 ## the angel sequence with no button prompt (section 25.2).
 
-const SATURDAY_SCENE := "res://scenes/intro/IntroSaturday.tscn"
+const SATURDAY_SCENE := "res://scenes/intro/WellSequence.tscn"
 
 @onready var player: Player = $Player
 @onready var rug_trigger: AutoEventTrigger = $RugTrigger
