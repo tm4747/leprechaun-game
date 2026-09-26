@@ -10,7 +10,18 @@ extends Node2D
 
 @onready var body: ColorRect = $Body
 @onready var head: ColorRect = $Head
+@onready var eyes: ColorRect = $Eyes
+
+var _normal_eye_color: Color
 
 func _ready() -> void:
 	body.color = body_color
 	head.color = head_color
+	_normal_eye_color = eyes.color
+
+## A fraction-of-a-second red flicker (PRD section 17) -- never a freeze,
+## zoom, sound cue, or label. Just the animation, exactly as specified.
+func flash_eyes_red(duration: float = 0.15) -> void:
+	eyes.color = Color(0.9, 0.1, 0.1)
+	await get_tree().create_timer(duration).timeout
+	eyes.color = _normal_eye_color
