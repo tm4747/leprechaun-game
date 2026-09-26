@@ -22,6 +22,7 @@ const HOME_SCENE := "res://scenes/intro/IntroHome.tscn"
 @onready var billy: NPCPlaceholder = $BillyCar/Billy
 
 func _ready() -> void:
+	DebugOverlay.register_scene("school", scene_file_path)
 	GameState.current_scene_path = scene_file_path
 	GameState.intro_progress = "school_arrival"
 	GameState.mark_screen_visited("intro_school")

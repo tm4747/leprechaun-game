@@ -28,6 +28,9 @@ func register_scene(id: String, path: String) -> void:
 	if OS.is_debug_build():
 		_debug_scenes[id] = path
 
+func has_scene(id: String) -> bool:
+	return _debug_scenes.has(id)
+
 func jump_to(id: String) -> void:
 	if not OS.is_debug_build():
 		return
@@ -63,6 +66,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			jump_to("angel")
 		KEY_8:
 			jump_to("underworld")
+		KEY_9:
+			jump_to("well")
 
 func _process(_delta: float) -> void:
 	if not OS.is_debug_build() or not _overlay_visible:
@@ -83,5 +88,5 @@ func _build_debug_text() -> String:
 		"Save state: %s" % ("has save" if GameState.has_save else "no save"),
 		"Movement mode: %d" % GameState.movement_mode,
 		"",
-		"[F3 toggle] 1 hp 2 vit 3 gut-calm 4 gut-terror 5 gut-joy 6 collision 7 angel 8 underworld",
+		"[F3 toggle] 1 hp 2 vit 3 gut-calm 4 gut-terror 5 gut-joy 6 collision 7 angel 8 underworld 9 well",
 	])

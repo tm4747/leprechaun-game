@@ -20,6 +20,7 @@ func _ready() -> void:
 	GameState.gut.gut_changed.connect(_on_gut_changed)
 
 	audio_player = AudioStreamPlayer.new()
+	audio_player.volume_db = -4.0
 	add_child(audio_player)
 	_beep_timer = Timer.new()
 	_beep_timer.wait_time = BEEP_INTERVAL

@@ -23,6 +23,7 @@ var _letters: Array[Label] = []
 var reveal_finished := false
 
 func _ready() -> void:
+	DebugOverlay.register_scene("menu", scene_file_path)
 	confirm_dialog.visible = false
 	menu_box.modulate.a = 0.0
 	menu_box.visible = false

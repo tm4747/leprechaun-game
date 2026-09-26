@@ -12,6 +12,7 @@ const NEXT_SCENE := "res://scenes/intro/IntroExterior.tscn"
 @onready var mother: NPCPlaceholder = $Mother
 
 func _ready() -> void:
+	DebugOverlay.register_scene("house", scene_file_path)
 	GameState.current_scene_path = scene_file_path
 	GameState.intro_progress = "friday_kitchen"
 	GameState.mark_screen_visited("intro_house_interior")

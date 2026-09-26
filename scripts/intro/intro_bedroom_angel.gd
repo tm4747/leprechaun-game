@@ -13,11 +13,12 @@ const SATURDAY_SCENE := "res://scenes/intro/WellSequence.tscn"
 @onready var distortion_overlay: ColorRect = $DistortionOverlay
 
 func _ready() -> void:
+	DebugOverlay.register_scene("angel", scene_file_path)
 	GameState.current_scene_path = scene_file_path
 	GameState.intro_progress = "night_bedroom"
 	GameState.mark_screen_visited("intro_bedroom_angel")
 	player.set_movement_mode(Player.MovementMode.SIDE_SCROLL)
-	player.set_camera_limits(0, 0, 700, 600)
+	player.set_camera_limits(0, 0, 790, 600)
 
 	if GameState.pending_spawn_id != "" and has_node(GameState.pending_spawn_id):
 		player.global_position = get_node(GameState.pending_spawn_id).global_position
@@ -41,6 +42,11 @@ func _ready() -> void:
 ## 24: "the room becomes increasingly distorted"). Values carry over from
 ## the TV scene and parents' argument -- nothing here artificially forces
 ## them, it just renders whatever GameState already holds.
+##
+## Note: HallwayGlimpse (beyond the doorway on the right) is a fixed tint,
+## deliberately never touched here -- the protection calms this room but
+## must not pretend the danger everywhere else in the house is gone
+## (PRD section 29).
 func _refresh_distortion() -> void:
 	var target_alpha := 0.4 if CriticalWarnings.any_critical() else 0.0
 	var tween := create_tween()

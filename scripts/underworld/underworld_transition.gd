@@ -15,6 +15,7 @@ const FIRST_SCREEN_SCENE := "res://scenes/underworld/UnderworldFirstScreen.tscn"
 @onready var wake_glow: ColorRect = $WakeGlow
 
 func _ready() -> void:
+	DebugOverlay.register_scene("transition", scene_file_path)
 	GameState.current_scene_path = scene_file_path
 	GameState.current_world = "underworld"
 	GameState.intro_progress = "underworld_transition"
@@ -27,6 +28,7 @@ func _play_fall_sequence() -> void:
 	# Increasing distance from the dog: a fading whine, heard once, then gone.
 	whine_player.stream = ToneGenerator.generate_beep(600.0, 0.5, 44100, 0.3)
 	whine_player.pitch_scale = 0.7
+	whine_player.volume_db = -6.0
 	whine_player.play()
 
 	wind_player.stream = ToneGenerator.generate_noise(2.0, 44100, 0.4)

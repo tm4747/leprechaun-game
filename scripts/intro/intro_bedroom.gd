@@ -9,6 +9,7 @@ const NEXT_SCENE := "res://scenes/intro/IntroHouseInterior.tscn"
 @onready var player: Player = $Player
 
 func _ready() -> void:
+	DebugOverlay.register_scene("bedroom", scene_file_path)
 	GameState.current_scene_path = scene_file_path
 	GameState.intro_progress = "friday_bedroom"
 	GameState.mark_screen_visited("intro_bedroom")

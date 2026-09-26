@@ -18,11 +18,14 @@ const COMMERCIAL_COLOR := Color(0.85, 0.75, 0.55)
 @onready var remote_trigger: AutoEventTrigger = $RemoteTrigger
 @onready var couch_marker: Marker2D = $CouchMarker
 @onready var tv_screen: ColorRect = $TV/Screen
+@onready var tv_audio: AudioStreamPlayer = $TVAudio
+@onready var channel_chirp: AudioStreamPlayer = $ChannelChirp
 @onready var bedroom_exit: ExitTrigger = $BedroomExit
 
 var channel_index := 0
 
 func _ready() -> void:
+	DebugOverlay.register_scene("home", scene_file_path)
 	GameState.current_scene_path = scene_file_path
 	GameState.intro_progress = "evening_return_home"
 	GameState.mark_screen_visited("intro_home")
@@ -58,6 +61,11 @@ func _on_remote_triggered() -> void:
 	_render_channel()
 	GameState.intro_progress = "evening_tv_on"
 
+	# CRT hum/static bed for as long as the TV is on (PRD section 54.4).
+	tv_audio.stream = ToneGenerator.generate_noise(2.0, 44100, 0.06)
+	tv_audio.volume_db = -12.0
+	tv_audio.play()
+
 	await _allow_channel_surfing(3.0)
 	await _play_commercial_and_supernatural_hint()
 	await _shutdown_tv()
@@ -68,6 +76,8 @@ func _allow_channel_surfing(duration: float) -> void:
 		if Input.is_action_just_pressed("move_up") or Input.is_action_just_pressed("move_down"):
 			channel_index = 1 - channel_index
 			_render_channel()
+			channel_chirp.stream = ToneGenerator.generate_beep(1400.0, 0.05, 44100, 0.25)
+			channel_chirp.play()
 		await get_tree().process_frame
 		elapsed += get_process_delta_time()
 
@@ -83,11 +93,15 @@ func _play_commercial_and_supernatural_hint() -> void:
 
 	# The subtle supernatural hint (section 21). Deliberately brief and
 	# ambiguous -- never a clean, identifiable face, never named as
-	# anything. The player may not be sure they saw it at all.
+	# anything. The player may not be sure they saw it at all. Audio gets
+	# "slightly unnatural processing" here per section 54.4, not a sting.
+	var normal_pitch := tv_audio.pitch_scale
+	tv_audio.pitch_scale = 0.55
 	await salesman.flash_eyes_red(0.12)
 	tv_screen.modulate = Color(0.55, 0.15, 0.15)
 	await Events.wait(0.2)
 	tv_screen.modulate = Color(1, 1, 1)
+	tv_audio.pitch_scale = normal_pitch
 
 	GameState.gut.set_gut(-0.7)
 	GameState.vitality.consume(60.0)
@@ -96,6 +110,7 @@ func _play_commercial_and_supernatural_hint() -> void:
 func _shutdown_tv() -> void:
 	await Events.wait(0.8)
 	tv_screen.visible = false
+	tv_audio.stop()
 	GameState.intro_progress = "evening_tv_off"
 	Events.enable_control()
 	await _father_arrives_and_argument()

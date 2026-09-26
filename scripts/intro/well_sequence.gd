@@ -19,6 +19,7 @@ const UNDERWORLD_TRANSITION_SCENE := "res://scenes/underworld/UnderworldTransiti
 @onready var fetch_marker_2: Marker2D = $FetchMarker2
 
 func _ready() -> void:
+	DebugOverlay.register_scene("well", scene_file_path)
 	GameState.current_scene_path = scene_file_path
 	GameState.intro_progress = "saturday_morning"
 	GameState.mark_screen_visited("well_sequence")
@@ -61,6 +62,18 @@ func _on_fetch_triggered() -> void:
 ## Section 33: the fall. No dialogue beyond the one shout -- entirely
 ## carried by movement, so it reads emotionally without any text box.
 func _play_well_sequence() -> void:
+	# The third throw itself: the stick visibly arcs toward the well and
+	# goes in (PRD section 32's closing beat), before the dog reacts to it.
+	stick.global_position = player.global_position + Vector2(10, -10)
+	stick.visible = true
+	stick.modulate.a = 1.0
+	var stick_arc := create_tween()
+	stick_arc.tween_property(stick, "global_position", well_marker.global_position, 0.5) \
+		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+	stick_arc.parallel().tween_property(stick, "modulate:a", 0.0, 0.5).set_delay(0.3)
+	await stick_arc.finished
+	stick.visible = false
+
 	GameState.gut.modify_gut(-0.4)
 	await dog.move_to(well_marker.global_position + Vector2(-30, 0), 0.9)
 

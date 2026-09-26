@@ -24,6 +24,7 @@ var _elapsed := 0.0
 var _next_thought_index := 0
 
 func _ready() -> void:
+	DebugOverlay.register_scene("underworld", scene_file_path)
 	GameState.current_scene_path = scene_file_path
 	GameState.current_world = WORLD_ID
 	GameState.intro_progress = "underworld_first_screen"

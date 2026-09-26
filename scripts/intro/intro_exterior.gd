@@ -12,6 +12,7 @@ const SCHOOL_SCENE := "res://scenes/intro/IntroSchool.tscn"
 @onready var bus_stand_marker: Marker2D = $BusStandMarker
 
 func _ready() -> void:
+	DebugOverlay.register_scene("exterior", scene_file_path)
 	GameState.current_scene_path = scene_file_path
 	GameState.intro_progress = "friday_exterior"
 	GameState.mark_screen_visited("intro_exterior")
