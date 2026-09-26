@@ -1,0 +1,62 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/hud.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/ui/bar_meter.gd" id="2"]
+[ext_resource type="Script" path="res://scripts/ui/gut_meter.gd" id="3"]
+[ext_resource type="Script" path="res://scripts/ui/cycle_indicator.gd" id="4"]
+[ext_resource type="Script" path="res://scripts/ui/mini_map.gd" id="5"]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1")
+
+[node name="Root" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="MetersBox" type="VBoxContainer" parent="Root"]
+layout_mode = 1
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 260.0
+offset_bottom = 110.0
+theme_override_constants/separation = 8
+
+[node name="HealthBar" type="Control" parent="Root/MetersBox"]
+custom_minimum_size = Vector2(220, 22)
+layout_mode = 2
+script = ExtResource("2")
+stat = 0
+fill_color = Color(0.35, 0.75, 0.35, 1)
+
+[node name="VitalityBar" type="Control" parent="Root/MetersBox"]
+custom_minimum_size = Vector2(220, 22)
+layout_mode = 2
+script = ExtResource("2")
+stat = 1
+fill_color = Color(0.35, 0.55, 0.8, 1)
+
+[node name="GutMeter" type="Control" parent="Root/MetersBox"]
+custom_minimum_size = Vector2(220, 22)
+layout_mode = 2
+script = ExtResource("3")
+
+[node name="CycleIndicator" type="Control" parent="Root"]
+layout_mode = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -80.0
+offset_top = 24.0
+offset_right = -24.0
+offset_bottom = 80.0
+script = ExtResource("4")
+
+[node name="MiniMap" type="Control" parent="Root"]
+layout_mode = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -104.0
+offset_top = 96.0
+offset_right = -24.0
+offset_bottom = 156.0
+script = ExtResource("5")

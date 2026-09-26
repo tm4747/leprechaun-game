@@ -21,6 +21,10 @@ var current_scene_path: String = ""
 var current_world: String = "human" # "human" | "underworld"
 var current_screen: String = ""
 
+## Logical screen graph backing the mini-map (PRD section 60). A future
+## multi-screen underworld appends to this instead of replacing the system.
+var visited_screens: Array[String] = []
+
 ## 0..1 human-world sun/moon position, later reinterpreted as the
 ## underworld hourglass fill (PRD section 40).
 var cycle_value: float = 0.35
@@ -48,6 +52,11 @@ func reset_for_new_quest() -> void:
 	health.restore_full()
 	vitality.restore_full()
 	gut.set_gut(0.0)
+
+func mark_screen_visited(screen_id: String) -> void:
+	current_screen = screen_id
+	if not visited_screens.has(screen_id):
+		visited_screens.append(screen_id)
 
 func set_control_enabled(enabled: bool) -> void:
 	if control_enabled == enabled:
