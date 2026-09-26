@@ -23,6 +23,9 @@ EventBus="*res://scripts/core/event_bus.gd"
 CriticalWarnings="*res://scripts/core/critical_warning_controller.gd"
 SceneManager="*res://scripts/core/scene_manager.gd"
 SaveManager="*res://scripts/save/save_manager.gd"
+Dialogue="*res://scenes/ui/DialogueLayer.tscn"
+Events="*res://scripts/core/event_sequencer.gd"
+GameHUD="*res://scenes/ui/HUD.tscn"
 DebugOverlay="*res://scripts/core/debug_overlay.gd"
 
 [display]

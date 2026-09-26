@@ -11,6 +11,7 @@ enum MovementMode { SIDE_SCROLL, TOP_DOWN }
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var placeholder_visual: Node2D = $PlaceholderVisual
+@onready var camera: Camera2D = $Camera2D
 @onready var _anim_controller := PlayerAnimationController.new(sprite)
 
 ## True while the player controller should read Input actions. Scripted
@@ -33,6 +34,15 @@ func _on_control_enabled() -> void:
 func _on_control_disabled() -> void:
 	accepts_input = false
 	velocity = Vector2.ZERO
+
+## Rooms/screens call this once in their own _ready() so the shared camera
+## on the player never shows past their background art (PRD section 37).
+func set_camera_limits(left: int, top: int, right: int, bottom: int) -> void:
+	camera.limit_left = left
+	camera.limit_top = top
+	camera.limit_right = right
+	camera.limit_bottom = bottom
+	camera.reset_smoothing()
 
 func set_movement_mode(mode: MovementMode) -> void:
 	movement_mode = mode
@@ -61,11 +71,15 @@ func _read_input_vector() -> Vector2:
 
 ## Used by the scripted event system (PRD section 52) to move the player
 ## without touching input state, e.g. walking to the breakfast table.
+## Safety-capped so a stuck path (e.g. blocked by collision) can never
+## soft-lock a cutscene -- it just stops short and logs a warning.
 func move_to(target_position: Vector2, speed: float = move_speed) -> void:
 	var was_accepting := accepts_input
 	accepts_input = false
 	var direction := (target_position - global_position)
-	while direction.length() > 2.0:
+	var max_ticks := int((direction.length() / maxf(speed, 1.0) + 2.0) * Engine.physics_ticks_per_second)
+	var ticks := 0
+	while direction.length() > 2.0 and ticks < max_ticks:
 		var step := direction.normalized() * speed * get_physics_process_delta_time()
 		if step.length() > direction.length():
 			step = direction
@@ -74,6 +88,9 @@ func move_to(target_position: Vector2, speed: float = move_speed) -> void:
 		_anim_controller.update(direction, true)
 		await get_tree().physics_frame
 		direction = target_position - global_position
+		ticks += 1
+	if ticks >= max_ticks:
+		push_warning("[Player] move_to() timed out before reaching %s" % target_position)
 	velocity = Vector2.ZERO
 	_anim_controller.update(Vector2.ZERO, false)
 	accepts_input = was_accepting

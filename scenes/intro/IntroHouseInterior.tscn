@@ -1,0 +1,105 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://scripts/intro/intro_house_interior.gd" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="2"]
+[ext_resource type="Script" path="res://scripts/intro/exit_trigger.gd" id="3"]
+[ext_resource type="Script" path="res://scripts/intro/auto_event_trigger.gd" id="4"]
+[ext_resource type="PackedScene" path="res://scenes/intro/NPCPlaceholder.tscn" id="5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_breakfast"]
+size = Vector2(80, 140)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_backpack"]
+size = Vector2(60, 140)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_exit"]
+size = Vector2(30, 140)
+
+[node name="IntroHouseInterior" type="Node2D"]
+script = ExtResource("1")
+
+[node name="Background" type="ColorRect" parent="."]
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 1600.0
+offset_bottom = 600.0
+color = Color(0.22, 0.19, 0.15, 1)
+
+[node name="Floor" type="ColorRect" parent="."]
+offset_left = 0.0
+offset_top = 520.0
+offset_right = 1600.0
+offset_bottom = 600.0
+color = Color(0.14, 0.11, 0.08, 1)
+
+[node name="FamilyPhoto" type="ColorRect" parent="."]
+offset_left = 190.0
+offset_top = 260.0
+offset_right = 230.0
+offset_bottom = 300.0
+color = Color(0.5, 0.42, 0.3, 1)
+
+[node name="BedroomDoors" type="ColorRect" parent="."]
+offset_left = 350.0
+offset_top = 340.0
+offset_right = 430.0
+offset_bottom = 520.0
+color = Color(0.3, 0.22, 0.16, 1)
+
+[node name="LivingRoomEntrance" type="ColorRect" parent="."]
+offset_left = 540.0
+offset_top = 320.0
+offset_right = 660.0
+offset_bottom = 520.0
+color = Color(0.08, 0.07, 0.09, 1)
+
+[node name="Table" type="ColorRect" parent="."]
+offset_left = 760.0
+offset_top = 450.0
+offset_right = 860.0
+offset_bottom = 520.0
+color = Color(0.42, 0.28, 0.18, 1)
+
+[node name="Mother" parent="." instance=ExtResource("5")]
+position = Vector2(870, 500)
+npc_name = "Mother"
+body_color = Color(0.55, 0.35, 0.45, 1)
+
+[node name="Backpack" type="ColorRect" parent="."]
+offset_left = 1440.0
+offset_top = 460.0
+offset_right = 1466.0
+offset_bottom = 500.0
+color = Color(0.3, 0.22, 0.12, 1)
+
+[node name="SpawnFromBedroom" type="Marker2D" parent="."]
+position = Vector2(60, 500)
+
+[node name="TableSeat" type="Marker2D" parent="."]
+position = Vector2(800, 495)
+
+[node name="Player" parent="." instance=ExtResource("2")]
+position = Vector2(60, 500)
+
+[node name="BreakfastTrigger" type="Area2D" parent="."]
+position = Vector2(790, 490)
+script = ExtResource("4")
+
+[node name="BreakfastTriggerShape" type="CollisionShape2D" parent="BreakfastTrigger"]
+shape = SubResource("RectangleShape2D_breakfast")
+
+[node name="BackpackTrigger" type="Area2D" parent="."]
+position = Vector2(1450, 480)
+script = ExtResource("4")
+
+[node name="BackpackTriggerShape" type="CollisionShape2D" parent="BackpackTrigger"]
+shape = SubResource("RectangleShape2D_backpack")
+
+[node name="ExitRight" type="Area2D" parent="."]
+position = Vector2(1585, 480)
+script = ExtResource("3")
+target_scene = "res://scenes/intro/IntroExterior.tscn"
+target_spawn_id = "SpawnFromHouse"
+
+[node name="ExitRightShape" type="CollisionShape2D" parent="ExitRight"]
+shape = SubResource("RectangleShape2D_exit")

@@ -21,6 +21,20 @@ var current_scene_path: String = ""
 var current_world: String = "human" # "human" | "underworld"
 var current_screen: String = ""
 
+## Name of a Marker2D in the destination scene to spawn the player at,
+## set by an ExitTrigger just before transitioning. Cleared once consumed.
+var pending_spawn_id: String = ""
+
+## Simple narrative flags the intro needs (has_backpack, etc.) without
+## inventing a full inventory/quest-flag system (PRD Rule 3).
+var story_flags: Dictionary = {}
+
+func set_flag(flag_name: String, value: bool = true) -> void:
+	story_flags[flag_name] = value
+
+func has_flag(flag_name: String) -> bool:
+	return story_flags.get(flag_name, false)
+
 ## Logical screen graph backing the mini-map (PRD section 60). A future
 ## multi-screen underworld appends to this instead of replacing the system.
 var visited_screens: Array[String] = []
