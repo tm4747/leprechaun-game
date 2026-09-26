@@ -69,4 +69,8 @@ func _test_commercial_and_shutdown(home: Node) -> void:
 	await home._shutdown_tv()
 	_check(not home.tv_screen.visible, "turning off the TV hides its glow")
 	_check(GameState.control_enabled, "control returns to the player once the TV is off")
-	_check(GameState.intro_progress == "evening_tv_off", "the TV sequence advances the intro checkpoint")
+	# _shutdown_tv() chains straight into Phase 8's father-arrives/argument
+	# beat (same IntroHome scene, same PRD 8.2 file), so by the time this
+	# await returns the checkpoint has already advanced past "evening_tv_off"
+	# -- Phase 8's own suite covers that beat in detail.
+	_check(GameState.intro_progress == "evening_parents_argument", "the TV sequence leads into the rest of the evening")
